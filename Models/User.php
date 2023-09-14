@@ -24,8 +24,18 @@ class User {
     }
 }
 
+    public function registerUser($id, $password, $name)
+    {
+        $query = "INSERT INTO User (group_idx, id, password, name, is_delete, is_disp) VALUES (1, '$id', '$password', '$name', 'N', 'N')";
+
+        if(mysqli_query($this->db->DataBase, $query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
 
 $user = new User();
-
 ?>

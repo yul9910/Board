@@ -1,64 +1,38 @@
-function check_input() {
-    function check_input()
-    {
-        if (!$("#id").val()) {
-            alert("아이디를 입력하세요!");
-            $("#id").focus();
-            return;
-        }
+$(document).ready(function() {
+    function register(){
+        var id = $("#id").val();
+        var password = $("#password").val();
+        var name = $("#name").val();
+        let data = {
+            action: 'register',
+            id: id,
+            password: password,
+            name: name
+        };
 
-        if (!$("#pass").val()) {
-            alert("비밀번호를 입력하세요!");
-            $("#pass").val().focus();
-            return;
-        }
-
-        if (!$("#pass_confirm").val()) {
-            alert("비밀번호확인을 입력하세요!");
-            $("#pass_confirm").focus();
-            return;
-        }
-
-        if (!$("#name").val()) {
-            alert("이름을 입력하세요!");
-            $("#name").focus();
-            return;
-        }
-
-        if (!$("#phone").val()) {
-            alert("전화번호를 입력하세요!");
-            $("#phone").focus();
-            return;
-        }
-
-        if (!$("#email").val()) {
-            alert("이메일 주소를 입력하세요!");
-            $("#email").focus();
-            return;
-        }
-
-        if ( $("#pass").val() !=
-            $("#pass_confirm").val()) {
-            alert("비밀번호가 일치하지 않습니다.\n다시 입력해 주세요!");
-            $("#pass").focus();
-            $("#pass").select();
-            return;
-        }
-
-        document.join.submit();
+        $.ajax({
+            type: "POST",
+            url: "../Controllers/UserController.php",
+            data: data,
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+                if (response.status == "success") {
+                    window.location.href = response.redirect;
+                } else {
+                    console.log("Failed condition.")
+                    alert("가입 실패!");
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert("에러 발생: " + textStatus + "!!!");
+            }
+        });
     }
-}
 
-function reset_form() {
-    function reset_form() {
-        document.join.id.value = "";
-        document.join.pass.value = "";
-        document.join.pass_confirm.value = "";
-        document.join.name.value = "";
-        document.join.gender.value = "";
-        document.join.phone.value = "";
-        document.join.email.value = "";
-        document.join.id.focus();
-        return;
-    }
-}
+    $("#regBtn").click(function(){
+      register();
+    });
+
+});
+

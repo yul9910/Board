@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP 게시판 웹 사이트</title>
     <link rel="stylesheet" href="/Board/assets/Css/styles.css?after">
-    <script src="/assets/Js/join.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="/Board/assets/Js/join.js"></script>
 </head>
 <body>
 <nav>
@@ -20,7 +22,7 @@
 
 <div class="container">
     <h3 style="text-align: center">회원가입 화면</h3>
-    <form name="join" method="post" action="../etc/JoinController.php">
+    <form name="join" method="post" >
         <div class="form-group">
             <input type="text" placeholder="아이디" name="id" id="id" maxlength="20" required>
         </div>
@@ -30,7 +32,7 @@
         <div class="form-group">
             <input type="text" placeholder="이름" name="name" id="name" maxlength="20" required>
         </div>
-        <button class="btn" type="submit">회원가입</button>
+        <button class="btn" type="button" id="regBtn">회원가입</button>
         <button class="btn" type="button" onclick="reset_form()">초기화</button>
     </form>
 </div>
