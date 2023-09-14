@@ -31,7 +31,7 @@ function register() {
         $user = new User();
 
         if ($user->registerUser($id, $password, $name)) {
-            $response = ['status' => 'success', 'message' => '회원가입 성공!'];
+            $response = ['status' => 'success', 'message' => '회원가입 성공!','redirect' => '../Views/DashBoard.php'];
         }
     }
 

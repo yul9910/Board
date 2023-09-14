@@ -16,7 +16,6 @@ $(document).ready(function() {
             data: data,
             dataType: "json",
             success: function(response) {
-                console.log(response);
                 if (response.status == "success") {
                     window.location.href = response.redirect;
                 } else {
@@ -31,8 +30,7 @@ $(document).ready(function() {
     }
 
     $("#regBtn").click(function(){
-      register();
+        register();
     });
-
 });
 
