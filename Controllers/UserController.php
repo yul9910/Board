@@ -1,28 +1,19 @@
 <?php
-include_once '../Models/User.php';
+session_start();
+require_once '../Models/User.php';
 
-class UserController {
+$response = ['status' => 'error', 'message' => '로그인 실패!'];
 
-private $userModel;
+if (isset($_POST['id']) && isset($_POST['password'])) {
+    $id = $_POST['id'];
+    $password = $_POST['password'];
+    $user = new User();
 
-public function __construct($db) {
-$this->userModel = new User($db);
+    if ($user->loginUser($id, $password)) {
+        $_SESSION['user_id'] = $id;
+        $response = ['status' => 'success', 'redirect' => '../Views/DashBoard.php'];
+    }
 }
 
-public function register($group_idx, $id, $password, $name) {
-return $this->userModel->createUser($group_idx, $id, $password, $name);
-}
-
-public function getUser($user_idx) {
-return $this->userModel->getUserById($user_idx);
-}
-
-public function updateUser($user_idx, $data) {
-return $this->userModel->updateUser($user_idx, $data);
-}
-
-public function deleteUser($user_idx) {
-return $this->userModel->deleteUser($user_idx);
-}
-}
+echo json_encode($response);
 ?>

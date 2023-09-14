@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP 게시판 웹 사이트</title>
     <link rel="stylesheet" href="../assets/Css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../assets/Js/Login.js"></script>
 </head>
 <body>
@@ -26,7 +27,7 @@
         <div class="form-group">
             <input type="password" placeholder="비밀번호" name="password" id="password" maxlength="80" required>
         </div>
-        <button class="btn" type="submit" onclick="check_input()">로그인</button>
+        <button class="btn" type="button" onclick="check_input()">로그인</button>
         <button class="btn" type="button" onclick="reset_form()">초기화</button>
     </form>
 </div>
