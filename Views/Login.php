@@ -27,7 +27,7 @@
         <div class="form-group">
             <input type="password" placeholder="비밀번호" name="password" id="password" maxlength="80" required>
         </div>
-        <button class="btn" type="button" onclick="Login()">로그인</button>
+        <button class="btn" type="button" id="logBtn">로그인</button>
         <button class="btn" type="button" onclick="reset_form()">초기화</button>
     </form>
 </div>

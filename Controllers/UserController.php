@@ -16,7 +16,6 @@ function login() {
             $response = ['status' => 'success', 'redirect' => '../Views/DashBoard.php'];
         }
     }
-
     return $response;
 }
 
@@ -51,4 +50,5 @@ if (isset($_POST['action'])) {
     }
 }
 
-?>
+
+
