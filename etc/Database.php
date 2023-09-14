@@ -7,7 +7,7 @@ class Database extends DBConfig {
     private $connection;
 
     public function __construct() {
-        $this->connection = new mysqli($this->host, $this->user, $this->password, $this->database);
+        $this->connection = new mysqli($this->host, $this->user, $this->password, $this->database ,$this->port);
 
         if($this->connection->connect_error) {
             die("Connection failed: " . $this->connection->connect_error);
