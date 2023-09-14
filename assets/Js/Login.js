@@ -15,3 +15,17 @@ function check_input()
     }
     document.loginSbmt.submit();
 }
+
+function reset_form() {
+    function reset_form() {
+        document.join.id.value = "";
+        document.join.pass.value = "";
+        document.join.pass_confirm.value = "";
+        document.join.name.value = "";
+        document.join.gender.value = "";
+        document.join.phone.value = "";
+        document.join.email.value = "";
+        document.join.id.focus();
+        return;
+    }
+}

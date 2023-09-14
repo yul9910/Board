@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="assets/js/login.js"></script>
+    <script src="../assets/Js/Login.js"></script>
 
 </head>
 <body>
@@ -61,6 +61,6 @@
         </div>
     </div>
 </div>
-<script src="assets/js/login.js"></script>
+<script src="../assets/Js/Login.js"></script>
 </body>
 </html>

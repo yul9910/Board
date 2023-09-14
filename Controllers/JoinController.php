@@ -15,7 +15,7 @@ $email = $_POST['email'];
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 // 데이터베이스에 삽입
-$query = "INSERT INTO User (id, password, name, gender, phone, email) VALUES (?, ?, ?, ?, ?, ?)";
+$query = "INSERT INTO User (id, password, name) VALUES ('test', 'test', 'test')";
 
 // 쿼리 준비
 $stmt = $conn->prepare($query);

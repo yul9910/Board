@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP 게시판 웹 사이트</title>
-    <link rel="stylesheet" href="/assets/css/styles.css">
-    <script src="/assets/js/join.js"></script>
+    <link rel="stylesheet" href="/Board/assets/Css/styles.css?after">
+    <script src="/assets/Js/join.js"></script>
 </head>
 <body>
 <nav>
@@ -14,7 +14,7 @@
         <a href="main.php">메인</a>
         <a href="list.php">게시판</a>
         <a href="login.php">로그인</a>
-        <a href="join_view.php">회원가입</a>
+        <a href="Register.php">회원가입</a>
     </div>
 </nav>
 
