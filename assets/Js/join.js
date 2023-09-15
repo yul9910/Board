@@ -16,6 +16,7 @@ $(document).ready(function() {
             data: data,
             dataType: "json",
             success: function(response) {
+                console.log(response); // 응답을 콘솔에 출력
                 if (response.status == "success") {
                     window.location.href = response.redirect;
                 } else {

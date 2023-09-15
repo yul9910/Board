@@ -14,8 +14,10 @@ class User {
     }
 
     public function loginUser($id, $password) {
-    $query = "SELECT * FROM user WHERE id = '$id' AND password = '$password'";
-    $result = mysqli_query($this->db->DataBase, $query);
+        $query = "SELECT * FROM `user` WHERE id = '$id' AND password = '$password'";
+        $result = mysqli_query($this->db->DataBase, $query);
+
+
 
     if (mysqli_num_rows($result) > 0) {
         return true;
@@ -26,7 +28,12 @@ class User {
 
     public function registerUser($id, $password, $name)
     {
-        $query = "INSERT INTO User (group_idx, id, password, name, is_delete, is_disp) VALUES (1, '$id', '$password', '$name', 'N', 'N')";
+        $query = "INSERT INTO `user` (group_idx, id, password, name, is_delete, is_disp) VALUES (1, '$id', '$password', '$name', 'N', 'N')";
+
+//        if(!mysqli_query($this->db->DataBase, $query)) {
+//            error_log("Error: " . mysqli_error($this->db->DataBase));  // 오류 로깅
+//            return false;
+//        }
 
         if(mysqli_query($this->db->DataBase, $query)) {
             return true;

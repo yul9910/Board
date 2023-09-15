@@ -23,11 +23,15 @@ function register() {
     $response = ['status' => 'error', 'message' => '회원가입 실패!'];
 
     if (isset($_POST['id']) && isset($_POST['password'])  && isset($_POST['name'])) {
+
         $id = $_POST['id'];
         $password = $_POST['password'];
         $name = $_POST['name'];
 
+
+
         $user = new User();
+
 
         if ($user->registerUser($id, $password, $name)) {
             $response = ['status' => 'success', 'message' => '회원가입 성공!','redirect' => '../Views/DashBoard.php'];

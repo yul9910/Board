@@ -16,6 +16,7 @@ function Login() {
         },
         dataType: "json",
         success: function(response) {
+            console.log(response);
             if (response.status == "success") {
                 window.location.href = response.redirect;
             } else {
