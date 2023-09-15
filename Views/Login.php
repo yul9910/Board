@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +7,7 @@
     <title>PHP 게시판 웹 사이트</title>
     <link rel="stylesheet" href="../assets/Css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../assets/Js/Login.js"></script>
+    <script src="../assets/Js/login.js"></script>
 </head>
 <body>
 <nav>

@@ -17,14 +17,20 @@ class User {
         $query = "SELECT * FROM `user` WHERE id = '$id' AND password = '$password'";
         $result = mysqli_query($this->db->DataBase, $query);
 
-
-
-    if (mysqli_num_rows($result) > 0) {
-        return true;
-    } else {
-        return false;
+        if (mysqli_num_rows($result) == 1) {
+            $row = mysqli_fetch_assoc($result);
+            return [
+                'success' => true,
+                'user_idx' => $row['user_idx'],  //idx 값을 반환합니다.
+                'id' => $row['id']
+            ];
+        } else {
+            return [
+                'success' => false
+            ];
+        }
     }
-}
+
 
     public function registerUser($id, $password, $name)
     {

@@ -78,3 +78,11 @@ input[type="tel"] {
     background-color: #007BFF;
     color: white;
 }
+
+textarea {
+    width: 100% !important;
+    height: 300px;
+    box-sizing: border-box;
+    resize: none;  /* 크기 조절을 막기 위한 속성 */
+}
+

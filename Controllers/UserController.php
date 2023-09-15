@@ -11,8 +11,10 @@ function login() {
         $password = $_POST['password'];
         $user = new User();
 
-        if ($user->loginUser($id, $password)) {
-            $_SESSION['user_id'] = $id;
+        $result = $user->loginUser($id, $password);
+        if ($result) {
+            $_SESSION['user_id'] = $result['id'];
+            $_SESSION['user_idx'] = $result['user_idx'];
             $response = ['status' => 'success', 'redirect' => '../Views/DashBoard.php'];
         }
     }
@@ -41,6 +43,19 @@ function register() {
     return $response;
 }
 
+    function logout() {
+        // 세션을 파기합니다.
+        session_destroy();
+
+        // JSON 응답을 생성합니다.
+        $response = ['status' => 'success'];
+
+        // JSON 응답을 반환합니다.
+        return $response;
+    }
+
+
+
 // 실행하려는 함수에 따라서 호출
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
@@ -50,7 +65,10 @@ if (isset($_POST['action'])) {
         case 'register':
             echo json_encode(register());
             break;
-        // 추가로 필요한 기능들을 case로 계속 확장 가능합니다.
+        case 'logout':
+            echo json_encode(logout());
+            break;
+        // 추가로 필요한 기능들을 case로 계속 확장 가능
     }
 }
 
