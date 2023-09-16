@@ -28,7 +28,7 @@ nav a:hover {
 }
 
 .welcome-box, .posts-box {
-    background-color: #e7e7e7;
+    background-color: #f9f9f9;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 5px;
@@ -128,3 +128,4 @@ textarea {
     background-color: #007BFF;
     color: white;
 }
+

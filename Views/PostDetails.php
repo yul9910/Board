@@ -25,7 +25,7 @@ if (!$postDetails) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시글 상세보기</title>
-    <link rel="stylesheet" href="../assets/Css/styles.css">
+    <link rel="stylesheet" href="../assets/Css/PostDetail.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
