@@ -26,21 +26,6 @@ $this->connection();
         return $this->DataBase;
     }
 
-    public function getPosts() {
-        $posts = [];
-        $query = "SELECT post_idx, title, content, regdate FROM post WHERE is_delete='N' AND is_disp='Y' ORDER BY regdate DESC"; // post_idx 추가
-        $result = $this->DataBase->query($query);
-
-        if($result) {
-            while ($row = $result->fetch_assoc()) {
-                $posts[] = $row;
-            }
-            $result->free();
-        }
-
-        return $posts;
-    }
-
 
 }
 

@@ -3,12 +3,8 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-// 로그인 확인. 이 부분은 사용자가 로그인 상태인지 확인하는거라는데...흐음.......
-if (!isset($_SESSION['user_idx'])) { // 변경된 부분
-    die("로그인이 필요합니다.");
-}
 
-require_once 'Database.php';
+require_once 'DataBase.php';
 
 Class Board {
     private $db;
@@ -47,6 +43,47 @@ Class Board {
         return [
             'success' => false,
         ];
+    }
+
+    public function getTotalPostCount() {
+        $query = "SELECT COUNT(post_idx) as total FROM post WHERE is_delete='N' AND is_disp='Y'";
+        $result = $this->db->DataBase->query($query);
+        if ($result) {
+            $row = $result->fetch_assoc();
+            return $row['total'];
+        }
+        return 0;
+    }
+
+    public function getPosts($page = 1, $perPage = 10) {
+        $offset = ($page - 1) * $perPage;
+
+        $posts = [];
+        $query = "SELECT post_idx, title, content, regdate FROM post WHERE is_delete='N' AND is_disp='Y' ORDER BY regdate DESC LIMIT $offset, $perPage";
+        $result = $this->db->DataBase->query($query);
+
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $posts[] = $row;
+            }
+            $result->free();
+        }
+
+        return $posts;
+    }
+
+    public function getPostDetails($post_idx) {
+        $post_idx = (int) $post_idx; // 안전한 쿼리를 위해 정수로 변환합니다.
+        $query = "SELECT * FROM post WHERE post_idx = $post_idx LIMIT 1";
+        $result = $this->db->DataBase->query($query);
+
+        if ($result) {
+            $row = $result->fetch_assoc();
+            $result->free();
+            return $row;
+        } else {
+            return false;
+        }
     }
 
 }

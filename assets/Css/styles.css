@@ -104,3 +104,27 @@ textarea {
     box-sizing: border-box;
     resize: none;
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a, .pagination span {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #007BFF;
+    text-decoration: none;
+    color: #007BFF;
+}
+
+.pagination span {
+    background-color: #007BFF;
+    color: white;
+}
+
+.pagination a:hover {
+    background-color: #007BFF;
+    color: white;
+}

@@ -11,9 +11,8 @@
 </head>
 <body>
 <nav>
-    <a href="main.php">PHP 게시판 웹 사이트</a>
+    <a href="DashBoard.php">PHP 게시판 웹 사이트</a>
     <div>
-        <a href="main.php">메인</a>
         <a href="DashBoard.php">게시판</a>
         <a href="Login.php">로그인</a>
         <a href="Register.php">회원가입</a>
