@@ -27,6 +27,25 @@ nav a:hover {
     background-color: #f9f9f9;
 }
 
+.welcome-box, .posts-box {
+    background-color: #e7e7e7;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center; /* 중앙 정렬 추가 */
+}
+
+.posts-list {
+    width: 100%;
+    border-collapse: collapse; /* 테이블 경계 간격 제거 */
+}
+
+.posts-list td, .posts-list th {
+    text-align: center; /* 테이블 셀 내용 중앙 정렬 */
+    padding: 10px;
+    border: 1px solid #ddd; /* 셀 경계 추가 */
+}
+
 .form-group {
     margin-bottom: 1em;
 }
@@ -83,6 +102,5 @@ textarea {
     width: 100% !important;
     height: 300px;
     box-sizing: border-box;
-    resize: none;  /* 크기 조절을 막기 위한 속성 */
+    resize: none;
 }
-

@@ -1,6 +1,8 @@
 <?php
  // 세션 시작
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 // 로그인 확인. 이 부분은 사용자가 로그인 상태인지 확인하는거라는데...흐음.......
 if (!isset($_SESSION['user_idx'])) { // 변경된 부분
     die("로그인이 필요합니다.");
