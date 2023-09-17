@@ -71,6 +71,24 @@ function deletepost() {
     return $response;
 }
 
+function comment() {
+    $response = ['status' => 'error', 'message' => '댓글 작성 실패!'];
+
+    if (isset($_SESSION['user_idx']) && isset($_POST['content']) && isset($_POST['post_idx']) && isset($_POST['group_idx'])) {
+        $user_idx = $_SESSION['user_idx'];
+        $content = $_POST['content'];
+        $post_idx = $_POST['post_idx'];
+        $group_idx = $_POST['group_idx'];
+
+        $board = new Board();
+
+        if ($board->createComment($content, $user_idx, $post_idx, $group_idx)) {
+            $response = ['status' => 'success', 'message' => '댓글 작성 성공!'];
+        }
+    }
+    return $response;
+}
+
 
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
@@ -82,6 +100,9 @@ if (isset($_POST['action'])) {
             break;
         case 'delete':
             echo json_encode(deletepost());
+            break;
+        case 'comment':
+            echo json_encode(comment());
             break;
         // 추가로 필요한 기능들을 case로 계속 확장
     }

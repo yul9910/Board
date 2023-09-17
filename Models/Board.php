@@ -137,6 +137,38 @@ Class Board {
         }
     }
 
+    public function createComment($content, $user_idx, $post_idx, $group_idx) {
+        $sql = "INSERT INTO `comment` (content, user_idx, post_idx, group_idx, is_delete, is_disp, regdate, moddate) VALUES ('$content', $user_idx, $post_idx, $group_idx, 'N', 'Y', NOW(), NOW())";
+
+        if ($this->db->DataBase->query($sql)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getCommentsByPost($post_idx) {
+        $post_idx = (int)$post_idx;
+
+        // 데이터베이스의 정확한 테이블 이름과 컬럼 이름을 확인하세요.
+        $query = "SELECT content, regdate, user_idx, comment_idx FROM `comment` WHERE post_idx = $post_idx AND is_delete='N' AND is_disp='Y' ORDER BY regdate DESC";
+
+        // 데이터베이스 연결 객체를 사용하는 부분입니다.
+        // 이 부분은 $this->db와 연관된 클래스의 정의에 따라 달라질 수 있습니다.
+        $result = $this->db->DataBase->query($query);
+
+        $comments = array();
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $comments[] = $row;
+            }
+            $result->free();
+        }
+
+        return $comments;
+    }
+
+
 }
 
 $board = new Board();
