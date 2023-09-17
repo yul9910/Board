@@ -129,3 +129,7 @@ textarea {
     color: white;
 }
 
+.write-post-button{
+    display: flex;
+    justify-content: center;
+}

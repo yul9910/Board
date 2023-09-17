@@ -26,9 +26,25 @@ if (!$postDetails) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시글 상세보기</title>
     <link rel="stylesheet" href="../assets/Css/PostDetail.css">
+    <link rel="stylesheet" href="../assets/Css/PostDetail.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../assets/Js/DashBoard.js"></script>
 </head>
 <body>
+<nav>
+    <a href="DashBoard.php">PHP 게시판 웹 사이트</a>
+    <div>
+        <a href="DashBoard.php">게시판</a>
+        <?php
+        if (isset($_SESSION['user_idx'])) {
+            echo '<a href="#" id="logoutBtn">로그아웃</a>';
+        } else {
+            echo '<a href="Login.php">로그인</a>';
+            echo '<a href="Register.php">회원가입</a>';
+        }
+        ?>
+    </div>
+</nav>
 <h2>글보기 페이지</h2>
 
 <div class="post-details">
@@ -44,6 +60,10 @@ if (!$postDetails) {
             <button onclick="deletePost(<?php echo $postDetails['post_idx']; ?>)">삭제</button>
         </div>
     <?php } ?>
+    <div class="return-to-list">
+        <button onclick="redirectToDashboard()" class="btn">글 목록</button>
+    </div>
+
 </div>
 
 <script>

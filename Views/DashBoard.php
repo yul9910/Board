@@ -49,6 +49,7 @@ $posts = $board->getPosts($currentPage, $perPage);
         <div class="welcome-box">
             <h1>환영합니다, <?php echo $_SESSION['user_id']; ?>님!</h1>
         </div>
+
     <?php
     } else {
     // 세션에 'shownLoginAlert' 변수가 설정되지 않았다면 알림을 표시하고 세션 변수를 설정합니다.
@@ -91,6 +92,14 @@ $posts = $board->getPosts($currentPage, $perPage);
             </tbody>
         </table>
     </div>
+
+    <!-- 글 쓰기 버튼 추가 -->
+    <div class="write-post-button">
+        <?php if (isset($_SESSION['user_idx'])): ?>
+            <button onclick="location.href='CreatePost.php'">글 쓰기</button>
+        <?php endif; ?>
+    </div>
+
 
     <!-- 페이지네이션 링크 출력 -->
     <?php
