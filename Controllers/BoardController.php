@@ -30,11 +30,39 @@ function post(){
     return $response;
 }
 
+function editpost(){
+    $response = ['status' => 'error', 'message' => '수정 실패!'];
+
+    if (isset($_SESSION['user_idx']) && isset($_POST['post_idx']) && isset($_POST['title']) && isset($_POST['content']) && isset($_POST['is_secret'])) {
+
+        $user_idx = $_SESSION['user_idx'];
+        $post_idx = $_POST['post_idx'];
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        $is_secret = $_POST['is_secret'];
+
+        $board = new Board();
+
+        // updateBoard() 메서드는 게시글의 ID를 첫 번째 인자로 받아서 해당 게시글을 수정하는 로직을 포함해야 합니다.
+        if ($board->updateBoard($post_idx, $title, $content, $is_secret, $user_idx)) {
+            $response = ['status' => 'success', 'message' => '글수정 성공!', 'redirect' => '../Views/DashBoard.php'];
+        }
+    }
+    return $response;
+}
+
+
+function deletepost(){
+
+}
 
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
         case 'post':
             echo json_encode(post());
+            break;
+        case 'edit':
+            echo json_encode(editpost());
             break;
         // 추가로 필요한 기능들을 case로 계속 확장
     }

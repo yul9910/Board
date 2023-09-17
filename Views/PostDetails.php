@@ -48,32 +48,24 @@ if (!$postDetails) {
 <h2>글보기 페이지</h2>
 
 <div class="post-details">
-    <h3><?php echo htmlspecialchars($postDetails['title']); ?></h3>
-    <p><?php echo nl2br(htmlspecialchars($postDetails['content'])); ?></p>
+    <h3 id="title"><?php echo htmlspecialchars($postDetails['title']); ?></h3>
+    <pid id="content"><?php echo nl2br(htmlspecialchars($postDetails['content'])); ?></pid>
 
     <?php
     // 로그인한 사용자만 수정, 삭제 버튼 보이도록
     if (isset($_SESSION['user_idx'])) {
         ?>
-        <div class="actions">
-            <button onclick="editPost(<?php echo $postDetails['post_idx']; ?>)">수정</button>
-            <button onclick="deletePost(<?php echo $postDetails['post_idx']; ?>)">삭제</button>
-        </div>
+    <!-- 기존의 버튼 코드를 아래와 같이 수정합니다. -->
+    <div class="actions">
+        <button id="editBtn" onclick="location.href='CreatePost.php?post_idx=<?php echo $postDetails['post_idx']; ?>'">수정</button>
+        <button id="delBtn" data-post-idx="<?php echo $postDetails['post_idx']; ?>">삭제</button>
+    </div>
+
     <?php } ?>
     <div class="return-to-list">
         <button onclick="redirectToDashboard()" class="btn">글 목록</button>
     </div>
 
 </div>
-
-<script>
-    function editPost(post_idx) {
-        // AJAX를 사용하여 게시글 수정 로직 구현
-    }
-
-    function deletePost(post_idx) {
-        // AJAX를 사용하여 게시글 삭제 로직 구현
-    }
-</script>
 </body>
 </html>
