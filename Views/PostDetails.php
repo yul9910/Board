@@ -28,7 +28,7 @@ if (!$postDetails) {
     <link rel="stylesheet" href="../assets/Css/PostDetail.css">
     <link rel="stylesheet" href="../assets/Css/PostDetail.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../assets/Js/DashBoard.js"></script>
+    <script src="../assets/Js/Post.js"></script>
 </head>
 <body>
 <nav>

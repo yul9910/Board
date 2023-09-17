@@ -52,9 +52,25 @@ function editpost(){
 }
 
 
-function deletepost(){
+function deletepost() {
+    $response = ['status' => 'error', 'message' => '삭제 실패!'];
 
+    if (isset($_SESSION['user_idx']) && isset($_POST['post_idx'])) {
+
+        $user_idx = $_SESSION['user_idx'];
+        $post_idx = $_POST['post_idx'];
+
+        $board = new Board();
+
+        // deleteBoard() 메서드는 게시글의 ID를 첫 번째 인자로 받아서 해당 게시글을 삭제하는 로직을 포함해야 합니다.
+        if ($board->deleteBoard($post_idx, $user_idx)) { // 일반적으로 게시글을 삭제할 때 작성자의 ID도 같이 검사해서 해당 사용자가 그 게시글을 삭제할 권한이 있는지 확인합니다.
+            $response = ['status' => 'success', 'message' => '글삭제 성공!', 'redirect' => '../Views/DashBoard.php'];
+        }
+    }
+
+    return $response;
 }
+
 
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
@@ -63,6 +79,9 @@ if (isset($_POST['action'])) {
             break;
         case 'edit':
             echo json_encode(editpost());
+            break;
+        case 'delete':
+            echo json_encode(deletepost());
             break;
         // 추가로 필요한 기능들을 case로 계속 확장
     }

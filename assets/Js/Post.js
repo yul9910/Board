@@ -1,5 +1,9 @@
+function redirectToDashboard() {
+    window.location.href = "DashBoard.php";
+}
 
 $(document).ready(function() {
+
     function CreatePost() {
 
         var title = $("#title").val();
@@ -65,6 +69,34 @@ $(document).ready(function() {
         });
     }
 
+    function deletePost(postIdx){
+        let data = {
+            action: 'delete', // 'delete' 액션으로 설정
+            post_idx: postIdx // 삭제할 게시글의 idx
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "../Controllers/BoardController.php",
+            data: data,
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+                if (response.status == "success") {
+                    alert("게시글 삭제 성공!");
+                    window.location.href = response.redirect; // 삭제 후 리다이렉트 할 URL
+                } else {
+                    console.log("Failed condition.")
+                    alert("게시글 삭제 실패!");
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert("에러 발생: " + textStatus + "!!!");
+            }
+        });
+    }
+
+
     $("#submitPostBtn").click(function() {
         const postIdx = $("#post_idx").val();
 
@@ -75,4 +107,10 @@ $(document).ready(function() {
             CreatePost(); // Call your function to create a new post.
         }
     });
+
+    $("#delBtn").click(function(){
+        const postIdx = $(this).data('post-idx'); // 버튼의 data-post-idx 속성에서 post_idx 값을 가져옵니다.
+        deletePost(postIdx);
+    });
+
 });

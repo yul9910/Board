@@ -70,7 +70,31 @@ Class Board {
         ];
     }
 
-    public function deleteBoard(){}
+    public function deleteBoard($post_idx) {
+        // 게시물의 소유자인지 확인하기 위해 게시물의 user_idx 값을 가져옵니다.
+        $getOwnerQuery = "SELECT user_idx FROM `Post` WHERE post_idx = $post_idx";
+        $ownerResult = mysqli_query($this->db->DataBase, $getOwnerQuery);
+        $ownerData = mysqli_fetch_assoc($ownerResult);
+
+        // 세션의 user_idx 값과 게시물의 user_idx 값을 비교하여 해당 게시물을 삭제할 권한이 있는지 확인합니다.
+        if ($ownerData && $ownerData['user_idx'] == $_SESSION['user_idx']) {
+            // 게시물 삭제 쿼리 실행
+            $query = "DELETE FROM `Post` WHERE post_idx = $post_idx";
+
+            if (mysqli_query($this->db->DataBase, $query)) {
+                // 게시물이 성공적으로 삭제되었다면 성공 값을 반환합니다.
+                return [
+                    'success' => true
+                ];
+            }
+        }
+
+        // 게시물 삭제 실패 시
+        return [
+            'success' => false,
+        ];
+    }
+
 
     public function getTotalPostCount() {
         $query = "SELECT COUNT(post_idx) as total FROM post WHERE is_delete='N' AND is_disp='Y'";
