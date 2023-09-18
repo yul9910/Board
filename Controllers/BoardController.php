@@ -40,12 +40,14 @@ function editpost(){
         $title = $_POST['title'];
         $content = $_POST['content'];
         $is_secret = $_POST['is_secret'];
+        $group_idx = $_SESSION['group_idx'];
+
 
 
         $board = new Board();
 
         // updateBoard() 메서드는 게시글의 ID를 첫 번째 인자로 받아서 해당 게시글을 수정하는 로직을 포함해야 합니다.
-        if ($board->updateBoard($post_idx, $title, $content, $is_secret, $user_idx)) {
+        if ($board->updateBoard($post_idx, $title, $content, $is_secret, $user_idx, $group_idx)) {
             $response = ['status' => 'success', 'message' => '글수정 성공!', 'redirect' => '../Views/DashBoard.php'];
         }
     }
@@ -60,10 +62,11 @@ function deletepost() {
 
         $user_idx = $_SESSION['user_idx'];
         $post_idx = $_POST['post_idx'];
+        $group_idx = $_SESSION['group_idx'];
 
         $board = new Board();
 
-        if ($board->deleteBoard($post_idx, $user_idx)) {
+        if ($board->deleteBoard($post_idx, $user_idx , $group_idx)) {
             $response = ['status' => 'success', 'message' => '글삭제 성공!', 'redirect' => '../Views/DashBoard.php'];
         }
     }
@@ -97,6 +100,8 @@ function editcomment() {
         $user_idx = $_SESSION['user_idx'];
         $newContent = $_POST['content'];
         $commentId = $_POST['comment_idx'];
+
+
 
         $board = new Board();
 

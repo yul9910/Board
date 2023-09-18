@@ -45,39 +45,39 @@ Class Board {
         ];
     }
 
-    public function updateBoard($post_idx, $title, $content, $is_secret) {
-        // 게시물의 소유자인지 확인하기 위해 게시물의 user_idx 값을 가져옵니다.
-        $getOwnerQuery = "SELECT user_idx FROM `Post` WHERE post_idx = $post_idx";
-        $ownerResult = mysqli_query($this->db->DataBase, $getOwnerQuery);
-        $ownerData = mysqli_fetch_assoc($ownerResult);
+    public function updateBoard($post_idx, $title, $content, $is_secret,$group_idx) {
+    // 게시물의 소유자인지 확인하기 위해 게시물의 user_idx 값을 가져옵니다.
+    $getOwnerQuery = "SELECT user_idx FROM `Post` WHERE post_idx = $post_idx";
+    $ownerResult = mysqli_query($this->db->DataBase, $getOwnerQuery);
+    $ownerData = mysqli_fetch_assoc($ownerResult);
 
-        // 세션의 user_idx 값과 게시물의 user_idx 값을 비교하여 해당 게시물을 수정할 권한이 있는지 확인합니다.
-        if ($ownerData && $ownerData['user_idx'] == $_SESSION['user_idx']) {
-            // 게시물 수정 쿼리 실행
-            $query = "UPDATE `Post` SET title = '$title', content = '$content', is_secret = '$is_secret' WHERE post_idx = $post_idx";
+    // 세션의 user_idx 값과 게시물의 user_idx 값을 비교하여 해당 게시물을 수정할 권한이 있는지 확인합니다.
+    // 또는 $_SESSION['group_idx']가 2인 경우에도 수정할 수 있도록 조건을 추가합니다.
+    if ($ownerData && ($ownerData['user_idx'] == $_SESSION['user_idx'] || $_SESSION['group_idx'] == 2)) {
+        // 게시물 수정 쿼리 실행
+        $query = "UPDATE `Post` SET title = '$title', content = '$content', is_secret = '$is_secret' WHERE post_idx = $post_idx";
 
-            if (mysqli_query($this->db->DataBase, $query)) {
-                // 게시물이 성공적으로 수정되었다면 성공 값을 반환합니다.
-                return [
-                    'success' => true
-                ];
-            }
+        if (mysqli_query($this->db->DataBase, $query)) {
+            // 게시물이 성공적으로 수정되었다면 성공 값을 반환합니다.
+            return [
+                'success' => true
+            ];
         }
-
-        // 게시물 수정 실패 시
-        return [
-            'success' => false,
-        ];
     }
+    // 게시물 수정 실패 시
+    return [
+        'success' => false,
+    ];
+}
 
-    public function deleteBoard($post_idx) {
+    public function deleteBoard($post_idx, $group_idx) {
         // 게시물의 소유자인지 확인하기 위해 게시물의 user_idx 값을 가져옵니다.
         $getOwnerQuery = "SELECT user_idx FROM `post` WHERE post_idx = $post_idx";
         $ownerResult = mysqli_query($this->db->DataBase, $getOwnerQuery);
         $ownerData = mysqli_fetch_assoc($ownerResult);
 
         // 세션의 user_idx 값과 게시물의 user_idx 값을 비교하여 해당 게시물을 삭제할 권한이 있는지 확인합니다.
-        if ($ownerData && $ownerData['user_idx'] == $_SESSION['user_idx']) {
+        if ($ownerData && ($ownerData['user_idx'] == $_SESSION['user_idx'] || $_SESSION['group_idx'] == 2)) {
             // 게시물 삭제 쿼리 실행
             $query = "DELETE FROM `post` WHERE post_idx = $post_idx";
 
@@ -191,7 +191,7 @@ Class Board {
     $ownerData = mysqli_fetch_assoc($ownerResult);
 
     // 사용자 확인
-    if ($ownerData && $ownerData['user_idx'] == $user_idx) {
+    if ($ownerData && ($ownerData['user_idx'] == $_SESSION['user_idx'] || $_SESSION['group_idx'] == 2)) {
         $query = "DELETE FROM `comment`  WHERE comment_idx = $comment_idx";
 
         if (mysqli_query($this->db->DataBase, $query)) {
