@@ -62,8 +62,7 @@ function deletepost() {
 
         $board = new Board();
 
-        // deleteBoard() 메서드는 게시글의 ID를 첫 번째 인자로 받아서 해당 게시글을 삭제하는 로직을 포함해야 합니다.
-        if ($board->deleteBoard($post_idx, $user_idx)) { // 일반적으로 게시글을 삭제할 때 작성자의 ID도 같이 검사해서 해당 사용자가 그 게시글을 삭제할 권한이 있는지 확인합니다.
+        if ($board->deleteBoard($post_idx, $user_idx)) {
             $response = ['status' => 'success', 'message' => '글삭제 성공!', 'redirect' => '../Views/DashBoard.php'];
         }
     }

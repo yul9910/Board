@@ -109,7 +109,7 @@ $(document).ready(function() {
     });
 
     $("#delBtn").click(function(){
-        const postIdx = $(this).data('post-idx'); // 버튼의 data-post-idx 속성에서 post_idx 값을 가져옵니다.
+        var postIdx = $(this).data('post-idx'); // 버튼의 data-post-idx 속성에서 post_idx 값을 가져옵니다.
         deletePost(postIdx);
     });
 
