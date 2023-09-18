@@ -90,8 +90,8 @@ if (!$postDetails) {
         } else {
             foreach ($comments as $comment) {
                 echo '<div class="comment-item">';
-
-                echo '<p>'.htmlspecialchars($comment['content']).'</p>';
+                echo '<strong>' . htmlspecialchars($comment['username']) . '</strong>'.'&nbsp;'.' / ';  // 작성자 이름 출력
+                echo '&nbsp;'.'<p>'.htmlspecialchars($comment['content']).'</p>';
                 echo '<span>'.htmlspecialchars($comment['regdate']).'</span>';
 
                 if (isset($_SESSION['user_idx']) && ($_SESSION['user_idx'] == $comment['user_idx'] || (isset($_SESSION['group_idx']) && $_SESSION['group_idx'] == 2))) {

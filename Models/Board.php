@@ -167,13 +167,14 @@ Class Board {
     public function getCommentsByPost($post_idx) {
         $post_idx = (int)$post_idx;
 
-        // 데이터베이스의 정확한 테이블 이름과 컬럼 이름을 확인하세요.
-        $query = "SELECT content, regdate, user_idx, comment_idx FROM `comment` 
-                    WHERE post_idx = $post_idx AND is_delete='N' AND is_disp='Y' 
-                    ORDER BY regdate DESC";
+        // 댓글과 해당 댓글의 작성자 이름을 함께 선택하는 쿼리..............
+        $query = "SELECT c.comment_idx, c.content, c.regdate, c.user_idx, u.name as username
+              FROM `comment` c
+              JOIN `user` u ON c.user_idx = u.user_idx
+              WHERE c.post_idx = $post_idx AND c.is_delete='N' AND c.is_disp='Y'
+              ORDER BY c.regdate DESC";
 
-        // 데이터베이스 연결 객체를 사용하는 부분입니다.
-        // 이 부분은 $this->db와 연관된 클래스의 정의에 따라 달라질 수 있습니다.
+        // 데이터베이스 연결 객체 사용
         $result = $this->db->DataBase->query($query);
 
         $comments = array();

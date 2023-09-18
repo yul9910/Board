@@ -14,7 +14,7 @@ class User {
     }
 
     public function loginUser($id, $password) {
-        $query = "SELECT * FROM `user` WHERE id = '$id' AND password = '$password'";
+        $query = "SELECT * FROM `user` WHERE id = '$id' AND password = '$password' AND is_delete='N'";
         $result = mysqli_query($this->db->DataBase, $query);
 
         if (mysqli_num_rows($result) == 1) {
@@ -37,12 +37,7 @@ class User {
     public function registerUser($id, $password, $name)
     {
         $query = "INSERT INTO `user` (group_idx, id, password, name, is_delete, is_disp) 
-                    VALUES (1, '$id', '$password', '$name', 'N', 'N')";
-
-//        if(!mysqli_query($this->db->DataBase, $query)) {
-//            error_log("Error: " . mysqli_error($this->db->DataBase));  // 오류 로깅
-//            return false;
-//        }
+                    VALUES (1, '$id', '$password', '$name', 'N', 'Y')";
 
         if(mysqli_query($this->db->DataBase, $query)) {
             return true;
@@ -51,24 +46,18 @@ class User {
         }
     }
 
+      //논리적 삭제로 변경!
       public function unregisterUser($user_idx) {
         // 사용자 아이디를 기반으로 삭제 쿼리를 작성
-        $query = "DELETE FROM `user` WHERE user_idx = $user_idx";
+          $query = "UPDATE `user` SET is_delete='Y' WHERE user_idx = $user_idx";
 
-        // 쿼리 실행
+
+          // 쿼리 실행
         if (mysqli_query($this->db->DataBase, $query)) {
-            return true;  // 사용자 삭제 성공
+            return true;  // 사용자 삭제(논리적 삭제) 성공
         }
 
         return false; // 사용자 삭제 실패
-    }
-
-    public function getName($post_idx)
-    {
-        $query = "select name from `user` left outer join `post` on user.user_idx = post.post_idx where post_idx= $post_idx";
-        if (mysqli_query($this->db->DataBase, $query)) {
-            return true;  // 댓글 삭제 성공
-        }
     }
 
 }
