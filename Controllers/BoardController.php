@@ -89,6 +89,24 @@ function comment() {
     return $response;
 }
 
+function editcomment() {
+    $response = ['status' => 'error', 'message' => '댓글 수정 실패!'];
+
+    if (isset($_SESSION['user_idx']) && isset($_POST['content']) && isset($_POST['comment_idx'])) {
+
+        $user_idx = $_SESSION['user_idx'];
+        $newContent = $_POST['content'];
+        $commentId = $_POST['comment_idx'];
+
+        $board = new Board();
+
+        if ($board->updateComment($commentId, $newContent, $user_idx)) {
+            $response = ['status' => 'success', 'message' => '댓글 수정 성공!'];
+        }
+    }
+    return $response;
+}
+
 
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
@@ -103,6 +121,9 @@ if (isset($_POST['action'])) {
             break;
         case 'comment':
             echo json_encode(comment());
+            break;
+        case 'edit_comment':
+            echo json_encode(editcomment());
             break;
         // 추가로 필요한 기능들을 case로 계속 확장
     }

@@ -13,6 +13,19 @@ $(document).ready(function() {
             alert("댓글 내용을 입력하세요.");
         }
     });
+
+    // 수정 버튼 클릭 이벤트
+    $(document).on("click", ".comment-edit-btn", function() {
+        var commentId = $(this).data('comment-id');
+        EditComment(this, commentId);
+    });
+
+    // 저장 버튼 클릭 이벤트
+    $(document).on("click", ".comment-save-btn", function() {
+        var commentId = $(this).data("comment-id");
+        var newContent = $(this).siblings(".edit-textarea").val();
+        SaveEditedComment(commentId, newContent);
+    });
 });
 
 function CreateComment(content) {
@@ -20,7 +33,7 @@ function CreateComment(content) {
         action: 'comment',
         post_idx: postIdx,
         content: content,
-        group_idx: 1 //일단 이렇게 하고 나중에 관리자 모드 할 때 바꿔보자ㅠ
+        group_idx: 1 // 일단이렇게 하고 관리자 할 때 바꾸자ㅠ
     };
 
     $.ajax({
@@ -38,6 +51,46 @@ function CreateComment(content) {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             alert("에러 발생: " + textStatus);
+        }
+    });
+}
+
+function EditComment(commentBtnElement, commentId) {
+    var currentContent = $(commentBtnElement).closest('.comment-item').find('p').text();
+    var textareaHtml = '<textarea class="edit-textarea">' + currentContent + '</textarea>';
+
+    $(commentBtnElement).closest('.comment-item').find('p').replaceWith(textareaHtml);
+
+    var saveButtonHtml = '<button class="comment-save-btn" data-comment-id="' + commentId + '">저장</button>';
+    $(commentBtnElement).after(saveButtonHtml);
+    $(commentBtnElement).hide();
+}
+
+function SaveEditedComment(commentId, newContent) {
+    $.ajax({
+        type: "POST",
+        url: "../Controllers/BoardController.php",
+        dataType: "json",
+        data: {
+            action: "edit_comment",
+            comment_idx: commentId,
+            content: newContent
+        },
+
+        success: function(response) {
+
+            if (response.status === 'success') {
+                var commentItem = $("button[data-comment-id=" + commentId + "]").closest('.comment-item');
+                commentItem.find("textarea.edit-textarea").replaceWith('<p>' + newContent + '</p>');
+                commentItem.find(".comment-save-btn").remove();
+                commentItem.find(".comment-edit-btn").show();
+            } else {
+                alert("댓글 수정에 실패했습니다.");
+            }
+        },
+
+        error: function() {
+            alert("서버 에러로 인해 댓글 수정에 실패했습니다.");
         }
     });
 }

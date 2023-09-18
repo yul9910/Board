@@ -168,6 +168,17 @@ Class Board {
         return $comments;
     }
 
+    public function updateComment($commentId, $newContent, $user_idx) {
+        $query = "UPDATE `comment` SET content = '$newContent' WHERE comment_idx = $commentId AND user_idx = $user_idx";
+        $result = mysqli_query($this->db->DataBase, $query);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 }
 
