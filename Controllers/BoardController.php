@@ -108,6 +108,23 @@ function editcomment() {
 }
 
 
+function deletecomment() {
+    $response = ['status' => 'error', 'message' => '댓글 삭제 실패!'];
+
+    if (isset($_SESSION['user_idx']) && isset($_POST['comment_idx'])) {
+
+        $user_idx = $_SESSION['user_idx'];
+        $comment_idx = $_POST['comment_idx'];
+
+        $board = new Board();
+
+        if ($board->deleteComment($comment_idx, $user_idx)) {
+            $response = ['status' => 'success', 'message' => '댓글 삭제 성공!'];
+        }
+    }
+    return $response;
+}
+
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
         case 'post':
@@ -124,6 +141,9 @@ if (isset($_POST['action'])) {
             break;
         case 'edit_comment':
             echo json_encode(editcomment());
+            break;
+        case 'delete_comment':
+            echo json_encode(deletecomment());
             break;
         // 추가로 필요한 기능들을 case로 계속 확장
     }

@@ -72,14 +72,14 @@ Class Board {
 
     public function deleteBoard($post_idx) {
         // 게시물의 소유자인지 확인하기 위해 게시물의 user_idx 값을 가져옵니다.
-        $getOwnerQuery = "SELECT user_idx FROM `Post` WHERE post_idx = $post_idx";
+        $getOwnerQuery = "SELECT user_idx FROM `post` WHERE post_idx = $post_idx";
         $ownerResult = mysqli_query($this->db->DataBase, $getOwnerQuery);
         $ownerData = mysqli_fetch_assoc($ownerResult);
 
         // 세션의 user_idx 값과 게시물의 user_idx 값을 비교하여 해당 게시물을 삭제할 권한이 있는지 확인합니다.
         if ($ownerData && $ownerData['user_idx'] == $_SESSION['user_idx']) {
             // 게시물 삭제 쿼리 실행
-            $query = "DELETE FROM `Post` WHERE post_idx = $post_idx";
+            $query = "DELETE FROM `post` WHERE post_idx = $post_idx";
 
             if (mysqli_query($this->db->DataBase, $query)) {
                 // 게시물이 성공적으로 삭제되었다면 성공 값을 반환합니다.
@@ -179,7 +179,24 @@ Class Board {
         }
     }
 
+    public function deleteComment($comment_idx, $user_idx){
+    $comment_idx = (int) $comment_idx; // 정수로 변환
 
+    // 댓글이 해당 사용자에게 속하는지 확인하는 쿼리
+    $getOwnerQuery = "SELECT user_idx FROM `comment` WHERE comment_idx = $comment_idx";
+    $ownerResult = mysqli_query($this->db->DataBase, $getOwnerQuery);
+    $ownerData = mysqli_fetch_assoc($ownerResult);
+
+    // 사용자 확인
+    if ($ownerData && $ownerData['user_idx'] == $user_idx) {
+        $query = "DELETE FROM `comment`  WHERE comment_idx = $comment_idx";
+
+        if (mysqli_query($this->db->DataBase, $query)) {
+            return true;  // 댓글 삭제 성공
+        }
+    }
+    return false; // 댓글 삭제 실패
+}
 }
 
 $board = new Board();

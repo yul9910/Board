@@ -26,6 +26,13 @@ $(document).ready(function() {
         var newContent = $(this).siblings(".edit-textarea").val();
         SaveEditedComment(commentId, newContent);
     });
+
+    // 삭제 버튼 클릭 이벤트
+    $(document).on("click", ".comment-delete-btn", function() {
+        var commentId = $(this).data('comment-id');
+        DeleteComment(commentId);
+    });
+
 });
 
 function CreateComment(content) {
@@ -93,4 +100,30 @@ function SaveEditedComment(commentId, newContent) {
             alert("서버 에러로 인해 댓글 수정에 실패했습니다.");
         }
     });
+}
+
+function DeleteComment(commentId) {
+    let confirmDelete = confirm("정말로 이 댓글을 삭제하시겠습니까?");
+    if (confirmDelete) {
+        $.ajax({
+            type: "POST",
+            url: "../Controllers/BoardController.php",
+            dataType: "json",
+            data: {
+                action: "delete_comment",
+                comment_idx: commentId
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    $("button[data-comment-id=" + commentId + "]").closest('.comment-item').remove();
+                    alert("댓글이 삭제되었습니다.");
+                } else {
+                    alert("댓글 삭제에 실패했습니다.");
+                }
+            },
+            error: function() {
+                alert("서버 에러로 인해 댓글 삭제에 실패했습니다.");
+            }
+        });
+    }
 }

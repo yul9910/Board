@@ -82,7 +82,7 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response) {
                 console.log(response);
-                if (response.status == "success") {
+                if (response.status === "success") {
                     alert("게시글 삭제 성공!");
                     window.location.href = response.redirect; // 삭제 후 리다이렉트 할 URL
                 } else {
@@ -100,11 +100,11 @@ $(document).ready(function() {
     $("#submitPostBtn").click(function() {
         const postIdx = $("#post_idx").val();
 
-        // If postIdx exists, it means we are editing a post. Else, we are creating a new post.
+
         if (postIdx) {
-            editPost(postIdx); // Call the editPost function if post_idx is available.
+            editPost(postIdx);
         } else {
-            CreatePost(); // Call your function to create a new post.
+            CreatePost();
         }
     });
 
