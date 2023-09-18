@@ -22,7 +22,8 @@ class User {
             return [
                 'success' => true,
                 'user_idx' => $row['user_idx'],  //idx 값을 반환합니다.
-                'id' => $row['id']
+                'id' => $row['id'],
+                'group_idx' => $row['group_idx']  // group_idx 값을 추가로 반환합니다.
             ];
         } else {
             return [
@@ -30,6 +31,7 @@ class User {
             ];
         }
     }
+
 
 
     public function registerUser($id, $password, $name)

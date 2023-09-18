@@ -15,6 +15,8 @@ function login() {
         if ($result) {
             $_SESSION['user_id'] = $result['id'];
             $_SESSION['user_idx'] = $result['user_idx'];
+            $_SESSION['group_idx'] = $result['group_idx'];
+
             $response = ['status' => 'success', 'redirect' => '../Views/DashBoard.php'];
         }
     }

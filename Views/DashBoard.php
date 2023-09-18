@@ -86,9 +86,11 @@ $posts = $board->getPosts($currentPage, $perPage);
                     <td><?php echo htmlspecialchars($post['post_idx']); ?></td>
                     <td>
                         <?php
-                        if ($post['is_secret'] == 'Y' && (!isset($_SESSION['user_idx']) || $_SESSION['user_idx'] != $post['user_idx'])) {
+                        if ($post['is_secret'] == 'Y' && !($_SESSION['user_idx'] == $post['user_idx'] || $_SESSION['group_idx'] == 2)) {
+                            // 비밀글 표시
                             echo '<a href="#" class="secret-post" data-post-author="'.$post['user_idx'].'">'.htmlspecialchars($post['title']).' (🔒)</a>';
                         } else {
+                            // 비밀글이 아님 or 로그인한 사용자가 게시글 작성자 or 그룹 인덱스가 2인 경우
                             echo '<a href="PostDetails.php?post_idx='.$post['post_idx'].'">'.htmlspecialchars($post['title']).'</a>';
                         }
                         ?>
@@ -104,7 +106,7 @@ $posts = $board->getPosts($currentPage, $perPage);
 
     <div class="write-post-button">
         <?php
-        if (isset($_SESSION['user_idx'])) {
+        if (isset($_SESSION['user_idx']) || (isset($_SESSION['group_idx']) && $_SESSION['group_idx'] == 2)) {
             echo '<button onclick="location.href=\'CreatePost.php\'">글 쓰기</button>';
         }
         ?>

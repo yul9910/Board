@@ -41,6 +41,7 @@ function editpost(){
         $content = $_POST['content'];
         $is_secret = $_POST['is_secret'];
 
+
         $board = new Board();
 
         // updateBoard() 메서드는 게시글의 ID를 첫 번째 인자로 받아서 해당 게시글을 수정하는 로직을 포함해야 합니다.
