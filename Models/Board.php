@@ -110,7 +110,8 @@ Class Board {
         $offset = ($page - 1) * $perPage;
 
         $posts = [];
-        $query = "SELECT post_idx, title, content, regdate FROM post WHERE is_delete='N' AND is_disp='Y' ORDER BY regdate DESC LIMIT $offset, $perPage";
+        // is_secret과 user_idx 값을 쿼리에 포함
+        $query = "SELECT post_idx, title, content, is_secret, user_idx, regdate FROM post WHERE is_delete='N' AND is_disp='Y' ORDER BY regdate DESC LIMIT $offset, $perPage";
         $result = $this->db->DataBase->query($query);
 
         if ($result) {
@@ -122,6 +123,8 @@ Class Board {
 
         return $posts;
     }
+
+
 
     public function getPostDetails($post_idx) {
         $post_idx = (int) $post_idx; // 안전한 쿼리를 위해 정수로 변환합니다.
