@@ -36,7 +36,8 @@ class User {
 
     public function registerUser($id, $password, $name)
     {
-        $query = "INSERT INTO `user` (group_idx, id, password, name, is_delete, is_disp) VALUES (1, '$id', '$password', '$name', 'N', 'N')";
+        $query = "INSERT INTO `user` (group_idx, id, password, name, is_delete, is_disp) 
+                    VALUES (1, '$id', '$password', '$name', 'N', 'N')";
 
 //        if(!mysqli_query($this->db->DataBase, $query)) {
 //            error_log("Error: " . mysqli_error($this->db->DataBase));  // 오류 로깅
@@ -47,6 +48,14 @@ class User {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function getName($post_idx)
+    {
+        $query = "select name from `user` left outer join `post` on user.user_idx = post.post_idx where post_idx= $post_idx";
+        if (mysqli_query($this->db->DataBase, $query)) {
+            return true;  // 댓글 삭제 성공
         }
     }
 
