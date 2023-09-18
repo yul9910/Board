@@ -6,13 +6,23 @@ if (session_status() == PHP_SESSION_NONE) {
 require_once '../Models/Board.php';
 $board = new Board();
 
+// 현재 페이지 번호를 URL의 쿼리 파라미터(page)에서 가져오는 코드
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;  // 현재 페이지
+
 $perPage = 10;  // 페이지당 게시글 수
 
 $totalPosts = $board->getTotalPostCount();  // 전체 게시글 수
 $totalPages = ceil($totalPosts / $perPage);  // 전체 페이지 수
+/*
+전체 게시글 수 ($totalPosts)를 페이지당 게시글 수 ($perPage)로 나누어 전체 페이지 수를 계산합니다.
+ceil 함수는 결과값을 올림하여 정수로 만듭니다.
+예를 들어, 총 25개의 게시글이 있고 페이지당 10개의 게시글을 표시하려면 3페이지가 필요하므로 ceil 함수는 2.5를 3으로 올림합니다.
+*/
 
 $posts = $board->getPosts($currentPage, $perPage);
+/*
+ board 객체의 getPosts 메서드를 호출하여 현재 페이지의 게시글 가져옴 getPosts 메서드는 해당 페이지의 게시글 목록을 반환합니다.
+  */
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +64,7 @@ $posts = $board->getPosts($currentPage, $perPage);
         echo '<h1>환영합니다, ' . $_SESSION['user_id'] . '님!</h1>';
         echo '</div>';
     } else {
+        // 알림표시를 한번만 하기위해
         if (!isset($_SESSION['shownLoginAlert'])) {
             $_SESSION['shownLoginAlert'] = true;
             echo '<script>
@@ -83,6 +94,7 @@ $posts = $board->getPosts($currentPage, $perPage);
             foreach ($posts as $post):
                 ?>
                 <tr>
+                <!--htmlspecialchars : 문자열에서 특정한 특수 문자를 HTML 엔티티로 변환하는 함수!-->
                     <td><?php echo htmlspecialchars($post['post_idx']); ?></td>
                     <td>
                         <?php
@@ -116,11 +128,11 @@ $posts = $board->getPosts($currentPage, $perPage);
     <?php
     if ($totalPages > 1) {
         echo '<div class="pagination">';
-        for ($i = 1; $i <= $totalPages; $i++) {
-            if ($i == $currentPage) {
-                echo "<span>$i</span>";
+        for ($i = 1; $i <= $totalPages; $i++) { // 각 페이지 번호를 출력하기 위한 반복문
+            if ($i == $currentPage) { //현재 반복 중인 페이지 번호($i)가 현재 페이지 번호가 동일
+                echo "<span>$i</span>"; // 텍스트로만 출력 , 링크X
             } else {
-                echo "<a href='DashBoard.php?page=$i'>$i</a>";
+                echo "<a href='DashBoard.php?page=$i'>$i</a>"; // 아니라면 해당 페이지 번호로 이동할 수 있는 링크 생성
             }
         }
         echo '</div>';

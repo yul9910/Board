@@ -46,19 +46,19 @@ Class Board {
     }
 
     public function updateBoard($post_idx, $title, $content, $is_secret,$group_idx) {
-    // 게시물의 소유자인지 확인하기 위해 게시물의 user_idx 값을 가져옵니다.
+    // 게시물의 소유자인지 확인하기 위해 게시물의 user_idx 값을 가져옴.
     $getOwnerQuery = "SELECT user_idx FROM `Post` WHERE post_idx = $post_idx";
     $ownerResult = mysqli_query($this->db->DataBase, $getOwnerQuery);
     $ownerData = mysqli_fetch_assoc($ownerResult);
 
-    // 세션의 user_idx 값과 게시물의 user_idx 값을 비교하여 해당 게시물을 수정할 권한이 있는지 확인합니다.
-    // 또는 $_SESSION['group_idx']가 2인 경우에도 수정할 수 있도록 조건을 추가합니다.
+    // 세션의 user_idx 값과 게시물의 user_idx 값을 비교하여 해당 게시물을 수정할 권한이 있는지 확인함.
+    // 또는 $_SESSION['group_idx']가 2인 경우에도 수정할 수 있도록 조건을 추가함.
     if ($ownerData && ($ownerData['user_idx'] == $_SESSION['user_idx'] || $_SESSION['group_idx'] == 2)) {
         // 게시물 수정 쿼리 실행
         $query = "UPDATE `Post` SET title = '$title', content = '$content', is_secret = '$is_secret' WHERE post_idx = $post_idx";
 
         if (mysqli_query($this->db->DataBase, $query)) {
-            // 게시물이 성공적으로 수정되었다면 성공 값을 반환합니다.
+            // 게시물이 성공적으로 삭제되었다면 성공 값을 반환함.
             return [
                 'success' => true
             ];
@@ -71,18 +71,18 @@ Class Board {
 }
 
     public function deleteBoard($post_idx, $group_idx) {
-        // 게시물의 소유자인지 확인하기 위해 게시물의 user_idx 값을 가져옵니다.
+        // 게시물의 소유자인지 확인하기 위해 게시물의 user_idx 값을 가져옴!
         $getOwnerQuery = "SELECT user_idx FROM `post` WHERE post_idx = $post_idx";
         $ownerResult = mysqli_query($this->db->DataBase, $getOwnerQuery);
         $ownerData = mysqli_fetch_assoc($ownerResult);
 
-        // 세션의 user_idx 값과 게시물의 user_idx 값을 비교하여 해당 게시물을 삭제할 권한이 있는지 확인합니다.
+        // 세션의 user_idx 값과 게시물의 user_idx 값을 비교하여 해당 게시물을 삭제할 권한이 있는지 확인함.
         if ($ownerData && ($ownerData['user_idx'] == $_SESSION['user_idx'] || $_SESSION['group_idx'] == 2)) {
             // 게시물 삭제 쿼리 실행
             $query = "DELETE FROM `post` WHERE post_idx = $post_idx";
 
             if (mysqli_query($this->db->DataBase, $query)) {
-                // 게시물이 성공적으로 삭제되었다면 성공 값을 반환합니다.
+                // 게시물이 성공적으로 삭제되었다면 성공 값을 반환함.
                 return [
                     'success' => true
                 ];
@@ -150,6 +150,7 @@ Class Board {
         }
     }
 
+    //$post_idx를 가지고 해당 게시글에 연결된 모든 댓글을 가져오는 함수!
     public function getCommentsByPost($post_idx) {
         $post_idx = (int)$post_idx;
 

@@ -49,7 +49,9 @@ if (!$postDetails) {
 <h2>글보기 페이지</h2>
 
 <div class="post-details">
+
     <h3 id="title"><?php echo htmlspecialchars($postDetails['title']); ?></h3>
+    <!--nl2br 은 새로운 줄을 표시하는 기호를 HTML에서 인식할 수 있도록 br 태그로 변환해줌-->
     <pid id="content"><?php echo nl2br(htmlspecialchars($postDetails['content'])); ?></pid>
 
     <?php
