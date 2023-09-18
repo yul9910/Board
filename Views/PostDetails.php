@@ -29,6 +29,7 @@ if (!$postDetails) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../assets/Js/Post.js"></script>
     <script src="../assets/Js/Comment.js"></script>
+    <script src="../assets/Js/logout.js?vs=2"></script>
 </head>
 <body>
 <nav>
@@ -52,16 +53,16 @@ if (!$postDetails) {
     <pid id="content"><?php echo nl2br(htmlspecialchars($postDetails['content'])); ?></pid>
 
     <?php
-    // 로그인한 사용자만 수정, 삭제 버튼 보이도록
-    if (isset($_SESSION['user_idx'])) {
+    // 작성자만 수정, 삭제 버튼 보이도록
+    if (isset($_SESSION['user_idx']) && $_SESSION['user_idx'] == $postDetails['user_idx']) {
         ?>
-    <!-- 기존의 버튼 코드를 아래와 같이 수정합니다. -->
-    <div class="actions">
-        <button id="editBtn" onclick="location.href='CreatePost.php?post_idx=<?php echo $postDetails['post_idx']; ?>'">수정</button>
-        <button id="delBtn" data-post-idx="<?php echo $postDetails['post_idx']; ?>">삭제</button>
-    </div>
-
-    <?php } ?>
+        <div class="actions">
+            <button id="editBtn" onclick="location.href='CreatePost.php?post_idx=<?php echo $postDetails['post_idx']; ?>'">수정</button>
+            <button id="delBtn" data-post-idx="<?php echo $postDetails['post_idx']; ?>">삭제</button>
+        </div>
+        <?php
+    }
+    ?>
     <div class="return-to-list">
         <button onclick="redirectToDashboard()" class="actions button">글 목록</button>
     </div>
