@@ -24,6 +24,7 @@ $posts = $board->getPosts($currentPage, $perPage);
     <link rel="stylesheet" href="../assets/Css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../assets/Js/logout.js?vs=2"></script>
+    <script src="../assets/Js/unregister.js"></script>
     <script>
         $(document).on('click', '.secret-post', function(e) {
             e.preventDefault();
@@ -39,11 +40,13 @@ $posts = $board->getPosts($currentPage, $perPage);
         <?php
         if (isset($_SESSION['user_idx'])) {
             echo '<a href="#" id="logoutBtn">로그아웃</a>';
+            echo '<a href="#" id="unregBtn">탈퇴</a>'; // 탈퇴 버튼 추가
         } else {
             echo '<a href="Login.php">로그인</a>';
             echo '<a href="Register.php">회원가입</a>';
         }
         ?>
+
     </div>
 </nav>
 

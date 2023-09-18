@@ -50,6 +50,18 @@ class User {
         }
     }
 
+    public function unregisterUser($user_idx) {
+        // 사용자 아이디를 기반으로 삭제 쿼리를 작성
+        $query = "DELETE FROM `user` WHERE user_idx = $user_idx";
+
+        // 쿼리 실행
+        if (mysqli_query($this->db->DataBase, $query)) {
+            return true;  // 사용자 삭제 성공
+        }
+
+        return false; // 사용자 삭제 실패
+    }
+
 }
 
 $user = new User();

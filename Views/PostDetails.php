@@ -39,11 +39,13 @@ if (!$postDetails) {
         <?php
         if (isset($_SESSION['user_idx'])) {
             echo '<a href="#" id="logoutBtn">로그아웃</a>';
+            echo '<a href="#" id="unregBtn">탈퇴</a>'; // 탈퇴 버튼 추가
         } else {
             echo '<a href="Login.php">로그인</a>';
             echo '<a href="Register.php">회원가입</a>';
         }
         ?>
+
     </div>
 </nav>
 <h2>글보기 페이지</h2>
