@@ -115,11 +115,14 @@ Class Board {
         $offset = ($page - 1) * $perPage;
 
         $posts = [];
-        // is_secret과 user_idx 값을 쿼리에 포함
-        $query = "SELECT post_idx, title, content, is_secret, user_idx, regdate FROM post 
-                   WHERE is_delete='N' AND is_disp='Y' 
-                   ORDER BY regdate 
-                   DESC LIMIT $offset, $perPage";
+        // is_secret, user_idx 및 작성자 이름을 쿼리에 포함
+        $query = "SELECT post.post_idx, post.title, post.content, post.is_secret, post.user_idx, post.regdate, user.name as author_name
+              FROM post 
+              INNER JOIN user ON post.user_idx = user.user_idx
+              WHERE post.is_delete='N' AND post.is_disp='Y' 
+              ORDER BY post.regdate DESC 
+              LIMIT $offset, $perPage";
+
         $result = $this->db->DataBase->query($query);
 
         if ($result) {
@@ -131,6 +134,7 @@ Class Board {
 
         return $posts;
     }
+
 
 
 

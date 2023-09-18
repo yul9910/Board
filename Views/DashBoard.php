@@ -26,7 +26,6 @@ $posts = $board->getPosts($currentPage, $perPage);
 
 $postnum = (int)$totalPosts - (($currentPage-1)*10);
 
-//$postname = $board->getName($post['post_idx']); //이름 가져오는..?
 ?>
 
 
@@ -39,6 +38,8 @@ $postnum = (int)$totalPosts - (($currentPage-1)*10);
     <link rel="stylesheet" href="../assets/Css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../assets/Js/logout.js?vs=2"></script>
+    <script src="../assets/Js/unregister.js"></script>
+
     <script>
         $(document).on('click', '.secret-post', function(e) {
             e.preventDefault();
@@ -54,6 +55,7 @@ $postnum = (int)$totalPosts - (($currentPage-1)*10);
         <?php
         if (isset($_SESSION['user_idx'])) {
             echo '<a href="#" id="logoutBtn">로그아웃</a>';
+            echo '<a href="#" id="unregBtn">탈퇴</a>'; // 탈퇴 버튼 추가
         } else {
             echo '<a href="Login.php">로그인</a>';
             echo '<a href="Register.php">회원가입</a>';
@@ -114,6 +116,7 @@ $postnum = (int)$totalPosts - (($currentPage-1)*10);
                         ?>
                     </td>
                     <td><?php echo $post['regdate']; ?></td>
+                    <td><?php echo htmlspecialchars($post['author_name']); ?></td> <!-- 작성자 이름을 표시 -->
                 </tr>
                 <?php
                 $postnum--;  // 게시글 번호 감소

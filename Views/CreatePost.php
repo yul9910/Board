@@ -21,9 +21,15 @@ if (isset($_GET['post_idx']) && !empty($_GET['post_idx'])) {
 <nav>
     <a href="DashBoard.php">PHP 게시판 웹 사이트</a>
     <div>
-        <a href="DashBoard.php">게시판</a>
-        <a href="login.php">로그인</a>
-        <a href="Register.php">회원가입</a>
+        <?php
+        if (isset($_SESSION['user_idx'])) {
+            echo '<a href="#" id="logoutBtn">로그아웃</a>';
+            echo '<a href="#" id="unregBtn">탈퇴</a>'; // 탈퇴 버튼 추가
+        } else {
+            echo '<a href="Login.php">로그인</a>';
+            echo '<a href="Register.php">회원가입</a>';
+        }
+        ?>
     </div>
 </nav>
 
