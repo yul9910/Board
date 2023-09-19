@@ -38,15 +38,18 @@ if (isset($_GET['post_idx']) && !empty($_GET['post_idx'])) {
     <h3 style="text-align: center">글 작성 화면</h3>
     <form name="createPost" method="post">
         <div class="form-group">
-            <input type="text" placeholder="제목" name="title" id="title" maxlength="50" value="<?php echo isset($postDetails['title']) ? $postDetails['title'] : ''; ?>" required>
+            <input type="text" placeholder="제목" name="title" id="title" maxlength="50"
+                   value="<?php echo isset($postDetails['title']) ? $postDetails['title'] : ''; ?>" required>
         </div>
         <div class="form-group">
-            <textarea placeholder="내용" name="content" id="content" cols="110" rows="20" required><?php echo isset($postDetails['content']) ? $postDetails['content'] : ''; ?></textarea>
+            <textarea placeholder="내용" name="content"
+                      id="content" cols="110" rows="20" required><?php echo isset($postDetails['content']) ? $postDetails['content'] : ''; ?></textarea>
         </div>
         <div class="form-group">
             <label for="is_secret">비밀글: </label>
             <input type="hidden" name="is_secret" value="N">
-            <input type="checkbox" name="is_secret" id="is_secret" value="Y" <?php echo (isset($postDetails['is_secret']) && $postDetails['is_secret'] === 'Y') ? 'checked' : ''; ?>>
+            <input type="checkbox" name="is_secret" id="is_secret" value="Y"
+                <?php echo (isset($postDetails['is_secret']) && $postDetails['is_secret'] === 'Y') ? 'checked' : ''; ?>>
         </div>
         <!-- Hidden input for post_idx -->
         <input type="hidden" name="post_idx" id="post_idx" value="<?php echo isset($post_idx) ? $post_idx : ''; ?>">
@@ -54,9 +57,6 @@ if (isset($_GET['post_idx']) && !empty($_GET['post_idx'])) {
         <button class="btn" type="button" onclick="reset_form()">초기화</button>
     </form>
 </div>
-
-
-
 
 <script>
     function reset_form() {

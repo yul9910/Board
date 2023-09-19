@@ -17,6 +17,13 @@ $postDetails = $board->getPostDetails($post_idx);
 if (!$postDetails) {
     die("게시글을 찾을 수 없습니다.");
 }
+$isUserLoggedIn = isset($_SESSION['user_idx']);
+$isUserAuthor = $_SESSION['user_idx'] == $postDetails['user_idx'];
+$isUserInGroup2 = isset($_SESSION['group_idx']) && $_SESSION['group_idx'] == 2;
+$isUserAllowed = $isUserLoggedIn && ($isUserAuthor || $isUserInGroup2);
+
+$comments = $board->getCommentsByPost($post_idx);
+
 ?>
 
 <!DOCTYPE html>
@@ -56,10 +63,11 @@ if (!$postDetails) {
     <pid id="content"><?php echo nl2br(htmlspecialchars($postDetails['content'])); ?></pid>
 
     <?php
-    if (isset($_SESSION['user_idx']) && ($_SESSION['user_idx'] == $postDetails['user_idx'] || (isset($_SESSION['group_idx']) && $_SESSION['group_idx'] == 2))) {
+    if ($isUserAllowed) {
         ?>
         <div class="actions">
-            <button id="editBtn" onclick="location.href='CreatePost.php?post_idx=<?php echo $postDetails['post_idx']; ?>'">수정</button>
+            <button id="editBtn"
+                    onclick="location.href='CreatePost.php?post_idx=<?php echo $postDetails['post_idx']; ?>'">수정</button>
             <button id="delBtn" data-post-idx="<?php echo $postDetails['post_idx']; ?>">삭제</button>
         </div>
         <?php
@@ -83,7 +91,6 @@ if (!$postDetails) {
 
     <div class="comment-list">
         <?php
-        $comments = $board->getCommentsByPost($post_idx);
 
         if (empty($comments)) {
             echo '<p>등록된 댓글이 없습니다.</p>';
@@ -94,7 +101,9 @@ if (!$postDetails) {
                 echo '&nbsp;'.'<p>'.htmlspecialchars($comment['content']).'</p>';
                 echo '<span>'.htmlspecialchars($comment['regdate']).'</span>';
 
-                if (isset($_SESSION['user_idx']) && ($_SESSION['user_idx'] == $comment['user_idx'] || (isset($_SESSION['group_idx']) && $_SESSION['group_idx'] == 2))) {
+                if (isset($_SESSION['user_idx']) && ($_SESSION['user_idx'] == $comment['user_idx']
+                        || (isset($_SESSION['group_idx']) && $_SESSION['group_idx'] == 2)))
+                {
                     echo '<button data-comment-id="'.$comment['comment_idx'].'" class="comment-edit-btn">수정</button>';
                     echo '<button data-comment-id="'.$comment['comment_idx'].'" class="comment-delete-btn">삭제</button>';
                 }

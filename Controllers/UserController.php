@@ -77,10 +77,11 @@ function register() {
     }
 
 // 실행하려는 함수에 따라서 호출
+// json_encode = php값을 json 형식의 문자열로 반환해줌
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
         case 'login':
-            echo json_encode(login());
+            echo json_encode(login()); // 응답 전송
             break;
         case 'register':
             echo json_encode(register());

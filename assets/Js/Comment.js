@@ -14,7 +14,7 @@ $(document).ready(function() {
         }
     });
 
-    // 수정 버튼 클릭 이벤트
+    // 수정 버튼 클릭 이벤트 (이벤트 리스너)
     $(document).on("click", ".comment-edit-btn", function() {
         var commentId = $(this).data('comment-id');
         EditComment(this, commentId);
@@ -63,14 +63,16 @@ function CreateComment(content) {
 }
 
 function EditComment(commentBtnElement, commentId) {
+    // 클릭된 버튼의 가장 가까운 부모 요소 중 .comment-item 클래스를 가진 요소를 찾고, 그 요소 내의 <p> 태그의 텍스트를 가져옴
     var currentContent = $(commentBtnElement).closest('.comment-item').find('p').text();
-    var textareaHtml = '<textarea class="edit-textarea">' + currentContent + '</textarea>';
 
+    var textareaHtml = '<textarea class="edit-textarea">' + currentContent + '</textarea>';
+    //replaceWith()는 선택한 요소를 다른 것으로 바꿈(텍스트 입력할 수 있는 란)
     $(commentBtnElement).closest('.comment-item').find('p').replaceWith(textareaHtml);
 
     var saveButtonHtml = '<button class="comment-save-btn" data-comment-id="' + commentId + '">저장</button>';
-    $(commentBtnElement).after(saveButtonHtml);
-    $(commentBtnElement).hide();
+    $(commentBtnElement).after(saveButtonHtml); //버튼 바뀜
+    $(commentBtnElement).hide(); // 버튼 사라짐
 }
 
 function SaveEditedComment(commentId, newContent) {

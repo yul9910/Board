@@ -106,7 +106,9 @@ $postnum = (int)$totalPosts - (($currentPage-1)*10);
                     <td><?php echo htmlspecialchars($postnum); ?></td>
                     <td>
                         <?php
-                        if ($post['is_secret'] == 'Y' && (!isset($_SESSION['user_idx']) || $_SESSION['user_idx'] === null || ($_SESSION['user_idx'] !== $post['user_idx'] && $_SESSION['group_idx'] != 2))) {
+                        if ($post['is_secret'] == 'Y' && (!isset($_SESSION['user_idx']) || $_SESSION['user_idx'] === null
+                                || ($_SESSION['user_idx'] !== $post['user_idx'] && $_SESSION['group_idx'] != 2)))
+                        {
                             // 비밀글 표시
                             echo '<a href="#" class="secret-post" data-post-author="'.$post['user_idx'].'">'.htmlspecialchars($post['title']).' (🔒)</a>';
                         } else {

@@ -1,8 +1,11 @@
 // jQuery 라이브러리를 사용하기 때문에, 해당 라이브러리가 이미 HTML 파일에서 로드되어있어야 합니다.
+// jQuery를 사용하기 때문에 아래 함수 안에 있어야 함
+// = html문서의 로딩이 다 끝나면
 $(document).ready(function() {
 function Login() {
 
     // 아이디와 비밀번호 값을 가져옵니다.
+    // val() = 해당 값을 반환하는 함수
     var id = $("#id").val();
     var password = $("#password").val();
 
@@ -15,6 +18,7 @@ function Login() {
             password: password
         },
         dataType: "json",
+        // 성공적으로 응답 도착하면, response 값에 결과를 담아 함수 실행
         success: function(response) {
             console.log(response);
             if (response.status == "success") {

@@ -7,6 +7,8 @@ if (session_status() == PHP_SESSION_NONE) {
 require_once 'DataBase.php';
 
 Class Board {
+
+
     private $db;
 
     public function __construct() {
@@ -112,6 +114,8 @@ Class Board {
     }
 
     public function getPosts($page = 1, $perPage = 10) {
+
+        // 페이지마다 처음으로 가져와야 할 게시물의 시작 지점
         $offset = ($page - 1) * $perPage;
 
         $posts = [];
@@ -126,7 +130,7 @@ Class Board {
         $result = $this->db->DataBase->query($query);
 
         if ($result) {
-            while ($row = $result->fetch_assoc()) {
+            while ($row = $result->fetch_assoc()) { // 연관 배열 형태로 결과 행을 반환
                 $posts[] = $row;
             }
             $result->free();
@@ -134,8 +138,6 @@ Class Board {
 
         return $posts;
     }
-
-
 
 
     public function getPostDetails($post_idx) {
@@ -220,6 +222,9 @@ Class Board {
     }
     return false; // 댓글 삭제 실패
 }
+
+
+
 
 }
 

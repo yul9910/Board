@@ -33,7 +33,6 @@ class User {
     }
 
 
-
     public function registerUser($id, $password, $name)
     {
         $query = "INSERT INTO `user` (group_idx, id, password, name, is_delete, is_disp) 
